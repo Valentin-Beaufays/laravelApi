@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Model\User;
+use App\Models\Accounts as User;
 class AuthController extends Controller
 {
     /**
@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|unique:accounts',
             'password' => 'required|string|confirmed'
         ]);
         $user = new User([
