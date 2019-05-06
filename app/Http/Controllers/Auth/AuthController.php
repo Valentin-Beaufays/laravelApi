@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Accounts as User;
+use Illuminate\Support\Str;
+use App\Notifications\SignupActivate;
+
 class AuthController extends Controller
 {
     /**
@@ -25,8 +28,12 @@ class AuthController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'activation_token' => Str::random(60)
         ]);
+
+        $user->notify(new SignupActivate($user));
+
         $user->save();
         return response()->json([
             'message' => 'Successfully created user!'
@@ -51,6 +58,9 @@ class AuthController extends Controller
             'remember_me' => 'boolean'
         ]);
         $credentials = request(['email', 'password']);
+        $credentials['active'] = 1;
+        $credentials['deleted_at'] = null;
+
         if(!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
@@ -91,5 +101,23 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    /**
+     * @param $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function signupActivate($token)
+    {
+        $user = User::where('activation_token', $token)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'This activation token is invalid.'
+            ], 404);
+        }
+        $user->active = true;
+        $user->activation_token = '';
+        $user->save();
+        return $user;
     }
 }
