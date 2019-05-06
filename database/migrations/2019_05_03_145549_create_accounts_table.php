@@ -23,8 +23,11 @@ class CreateAccountsTable extends Migration
                 ->unique()
                 ->nullable()
                 ->default(null);
+            $table->boolean('active')->default(false);
+            $table->string('activation_token');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

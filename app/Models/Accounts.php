@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Passport\HasApiTokens;
@@ -9,7 +10,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Accounts extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, SoftDeletes;
+
+    protected $date = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +20,7 @@ class Accounts extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'token_id'
+        'name', 'email', 'password', 'token_id', 'active', 'activation_token'
     ];
 
     /**
@@ -26,7 +29,7 @@ class Accounts extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'token_id'
+        'password', 'remember_token', 'token_id', 'activation_token'
     ];
 
     /**
