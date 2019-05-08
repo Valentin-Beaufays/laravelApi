@@ -1,12 +1,10 @@
 <?php
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use app\Models\User;
+use Illuminate\Support\Str;
 
-
-class AccountsSeeder extends Seeder
+class AccountsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,12 +13,13 @@ class AccountsSeeder extends Seeder
      */
     public function run(): void
     {
-        for($index = 0; $index<10; $index++){
+        for($index = 0; $index<50; $index++){
             DB::table('accounts')->insert([
                 'name' => 'user-'.$index,
                 'email' => 'user-'.$index.'@gmail.com',
                 'password' => bcrypt('myskillcamp'),
-                'api_token' => Str::random(60)
+                'api_token' => Str::random(60),
+                'activation_token' => Str::random(60)
             ]);
         }
 
