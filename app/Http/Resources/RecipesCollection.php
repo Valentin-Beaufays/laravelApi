@@ -14,13 +14,12 @@ class RecipesCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+        dd($this->collection);
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
-            'owner' => $this->owner,
+            'data' => $this->collection,
+            'links' => [
+                'self' => 'link-value',
+            ],
         ];
     }
 }
