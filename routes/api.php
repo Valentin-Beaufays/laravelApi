@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Resources\RecipeResource;
+use App\Http\Resources\RecipesCollection;
 use Illuminate\Http\Request;
+use App\Models\Account;
+use App\Http\Resources\AccountResource;
+use \App\Models\Recipe;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +27,18 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+
+
     });
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('/test', function (Request $request) {
+            $recipe = Recipe::all();
+            return new RecipesCollection($recipe);
+        });
+    });
+
+
 });
+
+

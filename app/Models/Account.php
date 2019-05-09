@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Http\Resources\RecipeResource;
 
-class Accounts extends Authenticatable
+class Account extends Authenticatable
 {
     use HasApiTokens, Notifiable, SoftDeletes;
 
+    /**
+     * @var array
+     */
     protected $date = ['deleted_at'];
 
     /**
@@ -29,7 +34,7 @@ class Accounts extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'token_id', 'activation_token'
+        'password', 'remember_token', 'token_id', 'activation_token', 'api_token'
     ];
 
     /**
@@ -41,5 +46,16 @@ class Accounts extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @var string
+     */
     protected  $table = 'accounts';
+
+    /**
+     * @return HasMany
+     */
+    public function recipes (): HasMany
+    {
+        return $this->hasMany(Recipe::class);
+    }
 }

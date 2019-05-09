@@ -19,7 +19,8 @@ class AccountsTableSeeder extends Seeder
                 'email' => 'user-'.$index.'@gmail.com',
                 'password' => bcrypt('myskillcamp'),
                 'api_token' => Str::random(60),
-                'activation_token' => Str::random(60)
+                'activation_token' => Str::random(60),
+
             ]);
         }
 

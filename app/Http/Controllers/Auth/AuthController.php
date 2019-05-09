@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Models\Accounts as User;
+use App\Models\Account as User;
 use Illuminate\Support\Str;
 use App\Notifications\SignupActivate;
 
