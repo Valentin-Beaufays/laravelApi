@@ -15,14 +15,11 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('surname');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('api_token', 80)
-                ->unique()
-                ->nullable()
-                ->default(null);
             $table->boolean('active')->default(false);
             $table->string('activation_token');
             $table->rememberToken();

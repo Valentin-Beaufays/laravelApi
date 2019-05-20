@@ -15,10 +15,10 @@ class AccountsTableSeeder extends Seeder
     {
         for($index = 0; $index<50; $index++){
             DB::table('accounts')->insert([
-                'name' => 'user-'.$index,
+                'first_name' => 'john-'.$index,
+                'surname' => 'user-'.$index,
                 'email' => 'user-'.$index.'@gmail.com',
                 'password' => bcrypt('myskillcamp'),
-                'api_token' => Str::random(60),
                 'activation_token' => Str::random(60),
 
             ]);
